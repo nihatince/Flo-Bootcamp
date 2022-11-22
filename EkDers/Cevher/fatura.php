@@ -80,7 +80,7 @@ include_once 'yönetim/fonksiyon.php';
         echo "Toplam: $toplam <br><br>";
 
         $kdv = ($toplam /100) * 8;
-        echo "KDV (%18) : $kdv <br><br>"; 
+        echo "KDV (%8) : $kdv <br><br>"; 
 
         $geneltoplam = $toplam + $kdv;
         echo "Genel Toplam: $geneltoplam <br><br><br>";
