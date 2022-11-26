@@ -36,33 +36,33 @@
                                 $topla3 = $topla3 + $dizi[$i];
                             }
                             if(($topla3 %10) == $dizi[10]){
-                                $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                                $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçerli"));
-                                header("Location:../index.php");
+                                $durum = true;
                             }else{
-                                $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                                $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
-                                header("Location:../index.php");
+                                 $durum = false;
                             }
 
 
                         }else{
-                            $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                            $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
-                            header("Location:../index.php");
+                            $durum = false;
                         }
                     
 
                 }else{
-                            $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                            $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
-                            header("Location:../index.php"); 
+                            $durum = false; 
                 }
             }
             else{
-                $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
-                header("Location:../index.php"); 
+                $durum = false; 
+            }
+
+            if($durum == false){
+            	 $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
+                 $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
+                 header("Location:../index.php"); 
+            }else{
+            	$sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
+                $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçerli"));
+                header("Location:../index.php");
             }
         }
 
