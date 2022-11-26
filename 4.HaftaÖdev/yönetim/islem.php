@@ -1,20 +1,13 @@
 <?php
-require_once("sinif.php");
-$dogrulama = new dogrula();
-
+include_once("sinif.php");
 $adsoyad = $_POST["adsoyad"];
 $tckimlik = $_POST["tckimlik"];
 
-$dogrulama->tckimlik1($adsoyad,$tckimlik);
+$dogrulama = new tckimlik($adsoyad,$tckimlik);
+$dogrulama->dogrula();
+$dogrulama->kaydet();
 
-
-
-
-
-
-
-
-
+header("Location:../index.php");
 
 
 ?>

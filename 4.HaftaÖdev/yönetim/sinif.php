@@ -1,82 +1,93 @@
 <?php
 
-    class dogrula{
+class tckimlik{
+    private $adsoyad;
+    private $tckimlik;
+    private $kontrol = false;
+    private $durum;
+    
 
-        public function __construct()
-        {
-            $baglan = new PDO("mysql:host=localhost;dbname=odev4","root","");
-            $baglan->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $baglan->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
-            $baglan->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            return $baglan;
+    public function __construct($adsoyad,$tckimlik){
+        $this->adsoyad = $adsoyad;
+        $this->tckimlik = $tckimlik;
+    }
+    public function dogrula(){
+
+        $tekler = 0;
+        $ciftler = 0;
+        $toplam = 0;
+        for($i=0;$i < 9; $i+=2){
+            $tekler += $this->tckimlik[$i];
         }
 
-        public function tckimlik1($adsoyad,$tckimlik){
-            $baglanti = self::__construct();
-
-            if(strlen($tckimlik) == 11){
-                $dizi = array();
-            for ($i=0 ; $i<=10; $i++){
-                $yeni = substr($tckimlik,$i,1);
-                $dizi[$i] = $yeni;
-            }
-                if(!$dizi[0] == 0){
-                    $topla1 = 0;
-                    $topla2 = 0;
-                        for($i=0; $i<9; $i+=2){
-                            $topla1 = $topla1 + $dizi[$i];
-                        }
-                        for($i=1; $i<8; $i+=2){
-                            $topla2 = $topla2 + $dizi[$i];
-                        }
-                        $sonuc = ($topla1 * 7) - $topla2;
-                        if($sonuc %10 == $dizi[9]){
-                            $topla3 = 0;
-                            for($i=0; $i<=9; $i++){
-                                $topla3 = $topla3 + $dizi[$i];
-                            }
-                            if(($topla3 %10) == $dizi[10]){
-                                $durum = true;
-                            }else{
-                                 $durum = false;
-                            }
-
-
-                        }else{
-                            $durum = false;
-                        }
-                    
-
-                }else{
-                            $durum = false; 
-                }
-            }
-            else{
-                $durum = false; 
-            }
-
-            if($durum == false){
-            	 $sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                 $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçersiz"));
-                 header("Location:../index.php"); 
-            }else{
-            	$sorgu = $baglanti->prepare("insert into bilgi values(?,?,?,?)");
-                $sorgu->execute(array(null,$adsoyad,$tckimlik,"TC Kimlik Geçerli"));
-                header("Location:../index.php");
-            }
+        for($j=1;$j < 9; $j+=2){
+            $ciftler += $this->tckimlik[$j];
         }
 
-        public function liste(){
-            $baglanti = self::__construct();
-            $sorgu = $baglanti->query("select * from bilgi");
-            foreach($sorgu as $satir){
-                echo "<tr> <td>".$satir["id"]."</td>" ; 
-                echo "<td>".$satir["adsoyad"]."</td>";
-                echo "<td align='center'>".$satir["tckimlik"]."</td>";
-                echo "<td align='center'>".$satir["durum"]."</td></tr>";
-            }
+        for($k=0;$k < 10; $k++){
+            $toplam += $this->tckimlik[$k];
+        }
+
+        $dizi = array("11111111110","22222222220","33333333330","44444444440","55555555550","66666666660","77777777770","88888888880","99999999990");
+        if (in_array($this->tckimlik,$dizi)){
+            $this->kontrol = false;
+        }
+
+        else if(mb_strlen($this->tckimlik, "utf-8") != 11 ){
+            $this->kontrol = false;
+        }
+
+        else if(!ctype_digit($this->tckimlik)){
+            $this->kontrol = false;
+        }
+        
+        else if($this->tckimlik[0] == 0){
+            $this->kontrol = false;
+        }
+
+        else if(($tekler * 7 - $ciftler) % 10 != $this->tckimlik[9]){
+            $this->kontrol = false;
+        }
+
+        else if(($toplam) % 10 != $this->tckimlik[10]){
+            $this->kontrol = false;
+        }
+        else{
+            $this->kontrol = true;
+        }
+        return $this->kontrol;
+    }
+    public function kaydet(){
+        $baglan = new PDO("mysql:host=localhost;dbname=odev4;charset=utf8", "root", "");
+        $baglan->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        if($this->kontrol == true){
+            $this->durum = "TC Kimlik geçerli";
+        }else{
+            $this->durum = "TC Kimlik geçersiz";
+        }
+
+        $sorgu = $baglan->prepare("insert into bilgi values (?,?,?,?)");
+        $sonuc = $sorgu->execute(array(null,$this->adsoyad,$this->tckimlik,$this->durum));
+        if ($sonuc){
+            return true;
+        }else{
+            return false;
         }
     }
 
+    public function liste(){
+        $baglan = new PDO("mysql:host=localhost;dbname=odev4;charset=utf8", "root", "");
+        $baglan->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sorgu = $baglan->query("select * from bilgi");
+        foreach($sorgu as $satir){
+            echo "<tr> <td>".$satir["id"]."</td>" ; 
+            echo "<td>".$satir["adsoyad"]."</td>";
+            echo "<td align='center'>".$satir["tckimlik"]."</td>";
+            echo "<td align='center'>".$satir["durum"]."</td></tr>";
+        }
+    }
+
+}
 
 ?>

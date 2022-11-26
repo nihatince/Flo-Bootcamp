@@ -1,6 +1,6 @@
 <?php
-require_once("yönetim/sinif.php");
-$dogrulama = new dogrula();
+include("yönetim/sinif.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,10 +32,13 @@ $dogrulama = new dogrula();
             <th>TC Kimlik</th>
             <th>Durum</th>
         </tr>
-        
+
         <?php
+            $dogrulama = new tckimlik(null,null);
             $dogrulama->liste();
         ?>
+        
+        
     </table>
     
 </body>
