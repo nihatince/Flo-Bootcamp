@@ -16,6 +16,7 @@
 ![bursiyerliste fw](https://user-images.githubusercontent.com/116922039/205174051-8d16e2df-f099-446c-ab2a-a8dd21fee07f.png)<br/><br/>
 ### Bursiyer Düzenle
 **-Bursiyerlerin Düzenle sutünunda bulunan icona tıklayarak seçtiğiniz bursiyerin verilerini düzenleyebilirsiniz.**<br/><br/>
+***ÖNEMLİ*: Bursiyer aldığı bursu düzenlerken toplam kasa fiyatı dikkate alınmalıdır. Örneğin bursiyerin aldığı bursu 5000 TL yaparsanız ve kasanızda o miktarda para bulunmazsa size uyarı mesajı verir ve verinizi düzenlemez. Sizi düzenle sayfasına tekrar yönlendirir.**<br/><br/> 
 **-Buradaki kodlar *AJAX* ile yazıldığı için başka sayfaya gitmeden aynı sayfa içinde düzenleme işlemi yapabilirsiniz.**<br/><br/>
 ![bursiyerduzenle fw](https://user-images.githubusercontent.com/116922039/205179378-979b3234-8e53-4e29-8202-ac93ad54db19.png)<br/><br/>
 ### Bursiyer Sil
@@ -51,3 +52,5 @@
 ### Çıkış Butonu 
 **-Çıkış butonu ile panel sayfasından çıkış yapılmaktadır.**<br/><br/>
 **-Sizi admin giriş sayfasına yönlendirecektir.**<br/><br/>
+
+
