@@ -99,7 +99,7 @@
                         
                         <div class="card-body">
                         <button onclick="window.location.href = 'bursiyerekle.php'" type="button" class="btn btn-primary"><i class="fas fa-fw fa-plus"></i>Bursiyer Ekle</button>
-                        <button  style="float:right;"onclick="window.location.href = 'bursdisaaktarma.php'" type="button" class="btn btn-success"><i class="fas fa-fw fa-download"></i>İçeriği İndir</button>
+                        <button  style="float:right;"onclick="window.location.href = 'bursdisaaktarma.php'" type="button" class="btn btn-success"><i style="font-size: 20px;" class="fas fa-fw fa-download"></i> İçeriği İndir</button>
                         <a style="float:right;margin-right:20px;" type="button" class="btn btn-dark"  href="burspdf.php" target="_blank"><i style="font-size: 20px;" class="fas fa-fw fa-file-pdf"></i> PDF Dönüştür</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -238,7 +238,7 @@
        $('#konu_id').val(id);
        $('.modal').modal('toggle');
      
-  
+       
      e.preventDefault();
 
       });
@@ -258,7 +258,7 @@
         // ajax ile değerleri gönderiyoruz..
    
        $.ajax({
-   
+        
          url    : 'bursiyerduzenleajax.php',
          method : 'post',
          data   : {adsoyad : adsoyad, telefon : telefon, email : email, bursfiyat : bursfiyat, id : 
@@ -266,8 +266,7 @@
          success: function(e){
 
          	// işlemi başarılıysa list ekranında değerlerin değişmiş hali gözükmesi aşağıdaki kodları yazıyoruz idsi eşit olan değeri düzenleme işlemi yapıyoruz..
-             
-             
+            window.location.reload();
          	$('#'+id).children('td[data-target=adsoyad]').text(adsoyad);
              
          	$('#'+id).children('td[data-target=telefon]').text(telefon);
@@ -280,10 +279,12 @@
          	 $('.modal').modal('toggle');
 
          }
-
+        
        });
     // burda da aynı şekilde sayfa yenilenmeyi engelledik
-e.preventDefault();
+    
+    e.preventDefault();
+
       
      });
 

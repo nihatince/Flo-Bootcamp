@@ -272,7 +272,7 @@
 
          	// işlemi başarılıysa list ekranında değerlerin değişmiş hali gözükmesi aşağıdaki kodları yazıyoruz idsi eşit olan değeri düzenleme işlemi yapıyoruz..
              
-             
+            window.location.reload(); 
          	$('#'+id).children('td[data-target=adsoyad]').text(adsoyad);
              
          	$('#'+id).children('td[data-target=telefon]').text(telefon);
